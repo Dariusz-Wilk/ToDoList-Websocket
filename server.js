@@ -23,13 +23,13 @@ io.on('connection', socket => {
 
 	socket.on('addTask', task => {
 		tasks.push(task);
-		socket.broadcast.emit('updateTasks', tasks);
+		socket.broadcast.emit('addTask', task);
 	});
 
 	socket.on('removeTask', id => {
 		const taskIndex = tasks.findIndex(item => item.id === id);
 		tasks.splice(taskIndex, 1);
-		socket.broadcast.emit('updatedTasks', tasks);
+		socket.broadcast.emit('removeTask', id);
 	});
 });
 

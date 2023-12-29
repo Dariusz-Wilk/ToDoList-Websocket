@@ -4,10 +4,7 @@ const randomId = require('@dark_wilk/id-generator');
 
 const App = () => {
 	const [socket, setSocket] = useState();
-	const [tasks, setTasks] = useState([
-		{ id: 1, name: 'shopping' },
-		{ id: 2, name: 'go out with a dog' },
-	]);
+	const [tasks, setTasks] = useState([]);
 	const [taskName, setTaskName] = useState('');
 
 	const removeTask = id => {
@@ -30,6 +27,18 @@ const App = () => {
 	useEffect(() => {
 		const socket = io('ws://localhost:8000', { transports: ['websocket'] });
 		setSocket(socket);
+
+		socket.on('updateData', tasks => {
+			setTasks(tasks);
+		});
+
+		socket.on('addTask', task => {
+			addTask(task);
+		});
+
+		socket.on('removeTask', id => {
+			removeTask(id);
+		});
 
 		return () => {
 			socket.disconnect();

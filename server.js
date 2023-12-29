@@ -6,10 +6,10 @@ const app = express();
 
 const tasks = [];
 
-app.use(express.static(path.join(__dirname, '/client/to-do-list/public')));
+app.use(express.static(path.join(__dirname, '/client/to-do-list/build')));
 
 app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname, '/client/to-do-list/public/index.html'));
+	res.sendFile(path.join(__dirname, '/client/to-do-list/build/index.html'));
 });
 
 const server = app.listen(process.env.PORT || 8000, () => {

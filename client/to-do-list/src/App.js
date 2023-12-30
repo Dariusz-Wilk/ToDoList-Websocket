@@ -7,9 +7,11 @@ const App = () => {
 	const [tasks, setTasks] = useState([]);
 	const [taskName, setTaskName] = useState('');
 
-	const removeTask = id => {
+	const removeTask = (id, emit = true) => {
 		setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
-		socket.emit('removeTask', id);
+		if (emit) {
+			socket.emit('removeTask', id);
+		}
 	};
 
 	const addTask = task => {
@@ -37,7 +39,7 @@ const App = () => {
 		});
 
 		socket.on('removeTask', id => {
-			removeTask(id);
+			removeTask(id, false);
 		});
 
 		return () => {
